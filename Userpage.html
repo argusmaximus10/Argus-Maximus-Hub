@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Luxury Flights</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            min-height: 100vh;
+        }
+        
+        .header {
+            max-width: 100%;
+            padding: 2rem;
+            background: linear-gradient(135deg, #000102, #6600cc);
+            color: white;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+        }
+        
+        .destinations {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            padding: 3rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .destination-card {
+            flex: 1 1 300px;
+            background-color: rgb(255, 255, 255);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .destination-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .destination-info {
+            padding: 1.5rem;
+        }
+        
+        .destination-info h2 {
+            margin-bottom: 0.5rem;
+            color: #0066cc;
+        }
+        
+        .destination-info p {
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+        }
+        
+        footer a {
+            color: #4da6ff;
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>First-class experience, economy cost.</h1>
+    </div>
+    
+    <div class="destinations">
+        <div class="destination-card" onclick="window.location.href='flight.html'">
+            <img src="wallpaperflare.com_wallpaper.jpg" alt="Paris" class="destination-img">
+            <div class="destination-info">
+                <h2>Visit the City of Love</h2>
+                <p>Experience the romance and beauty of Paris with our exclusive flight deals. Discover the Eiffel Tower, Louvre, and charming cafés.</p>
+            </div>
+        </div>
+        
+        <div class="destination-card" onclick="window.location.href='flight.html'">
+            <img src="newyork.jpg" alt="New York" class="destination-img">
+            <div class="destination-info">
+                <h2>The Concrete Jungle</h2>
+                <p>Feel the energy of New York City with its iconic skyline, Broadway shows, and endless dining options.</p>
+            </div>
+        </div>
+        
+        <div class="destination-card" onclick="window.location.href='flight.html'">
+            <img src="rome.jpg" alt="Rome" class="destination-img">
+            <div class="destination-info">
+                <h2>The Eternal City</h2>
+                <p>Walk through history in Rome, where ancient ruins, Renaissance art, and delicious cuisine await around every corner.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="destinations">
+        <div class="destination-card" onclick="window.location.href='flight.html'">
+            <img src="london.jpg" alt="Paris" class="destination-img">
+            <div class="destination-info">
+                <h2>The city of fog</h2>
+                <p>A timeless metropolis where history meets cutting-edge culture. See the Tower of London, ride the London Eye, and stroll through Camden Market. Iconic landmarks like Big Ben and world-class theaters make it endlessly captivating.</p>
+            </div>
+        </div>
+        
+        <div class="destination-card" onclick="window.location.href='flight.html'">
+            <img src="madrid.jpg" alt="New York" class="destination-img">
+            <div class="destination-info">
+                <h2>La casa blanca</h2>
+                <p>The vibrant Spanish capital blends historic grandeur with modern energy. Explore the Prado Museum's masterpieces, savor tapas in Plaza Mayor, and experience fiery flamenco performances. Don't miss the Royal Palace and Retiro Park's tranquil beauty.</p>
+            </div>
+        </div>
+        
+        <div class="destination-card" onclick="window.location.href='flight.html'">
+            <img src="dubai.jpg" alt="Rome" class="destination-img">
+            <div class="destination-info">
+                <h2>Gulf tiger</h2>
+                <p>A futuristic oasis of luxury and adventure. Marvel at the Burj Khalifa, shop in gold souks, and ski indoors at Mall of the Emirates. Desert safaris and palm-shaped islands showcase its bold ambition.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="destinations">
+        <div class="destination-card" onclick="window.location.href='flight.html'">
+            <img src="toronto.jpg" alt="Paris" class="destination-img">
+            <div class="destination-info">
+                <h2>the 6</h2>
+                <p>A multicultural mosaic with iconic cityscapes. Scale the CN Tower for panoramic views, explore diverse eats in Kensington Market, and catch a show by Lake Ontario. The perfect blend of urban energy and lakeside charm.</p>
+            </div>
+        </div>
+        
+        <div class="destination-card" onclick="window.location.href='flight.html'">
+            <img src="berlin.jpg" alt="New York" class="destination-img">
+            <div class="destination-info">
+                <h2>the Stone City</h2>
+                <p>Where history and hipster culture collide. Walk the Berlin Wall's graffiti-art remnants, party in abandoned warehouses, and savor currywurst under TV Tower's shadow. Bold, rebellious, and endlessly creative.</p>
+            </div>
+        </div>
+        
+        <div class="destination-card" onclick="window.location.href='flight.html'">
+            <img src="tokyo.jpg" alt="Rome" class="destination-img">
+            <div class="destination-info">
+                <h2>Eastern Capital</h2>
+                <p>A dazzling fusion of neon-lit futurism and ancient tradition. Lose yourself in Shibuya's scramble crossing, savor sushi at Tsukiji Market, and find peace in Meiji Shrine's forests. From high-tech robots to cherry blossom gardens, Tokyo thrills at every turn.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>You're receiving this email because you subscribed to our newsletter.</p>
+        <p>
+            <a href="#">Unsubscribe</a> | <a href="#">Privacy Policy</a>
+        </p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&display=swap" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Management System</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a0a3a 100%);
+            color: #ffffff;
+            padding: 25px 0;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(106, 13, 173, 0.3);
+            border-bottom: 2px solid #6a0dad;
+        }
+        h1, h2, h3 {
+            margin: 0;
+            font-weight: 300;
+        }
+        h1 {
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+        }
+        h2 {
+            font-size: 1.8rem;
+            color: #b388ff;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #333;
+        }
+        h3 {
+            font-size: 1.4rem;
+            color: #b388ff;
+            margin-bottom: 15px;
+        }
+        .menu {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            gap: 15px;
+        }
+        .menu-button {
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #4a148c 0%, #6a0dad 100%);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(106, 13, 173, 0.3);
+            letter-spacing: 0.5px;
+        }
+        .menu-button:hover {
+            background: linear-gradient(135deg, #6a0dad 0%, #8e24aa 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(106, 13, 173, 0.4);
+        }
+        .content-area {
+            background-color: #1e1e1e;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            min-height: 400px;
+            border: 1px solid #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #252525;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+        }
+        th {
+            background-color: #4a148c;
+            color: white;
+            font-weight: 500;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        tr {
+            transition: background-color 0.2s;
+        }
+        tr:nth-child(even) {
+            background-color: #2a2a2a;
+        }
+        tr:hover {
+            background-color: #333;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #b388ff;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 6px;
+            box-sizing: border-box;
+            color: #e0e0e0;
+            transition: all 0.3s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #6a0dad;
+            box-shadow: 0 0 0 2px rgba(106, 13, 173, 0.3);
+        }
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        .submit-btn {
+            background: linear-gradient(135deg, #4a148c 0%, #6a0dad 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(106, 13, 173, 0.3);
+        }
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #6a0dad 0%, #8e24aa 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(106, 13, 173, 0.4);
+        }
+        .delete-btn {
+            background: linear-gradient(135deg, #c2185b 0%, #e91e63 100%);
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .delete-btn:hover {
+            background: linear-gradient(135deg, #e91e63 0%, #ff4081 100%);
+            transform: translateY(-1px);
+        }
+        .edit-btn {
+            background: linear-gradient(135deg, #ff8f00 0%, #ffa000 100%);
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 8px;
+            transition: all 0.3s;
+        }
+        .edit-btn:hover {
+            background: linear-gradient(135deg, #ffa000 0%, #ffb300 100%);
+            transform: translateY(-1px);
+        }
+        .hidden {
+            display: none;
+        }
+        .status-message {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 6px;
+            font-weight: 500;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .success {
+            background-color: #1b5e20;
+            color: #a5d6a7;
+            border-left: 4px solid #4caf50;
+        }
+        .error {
+            background-color: #7f0000;
+            color: #ffcdd2;
+            border-left: 4px solid #f44336;
+        }
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a148c;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6a0dad;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Flight Management System</h1>
+        </header>
+        
+        <div class="menu">
+            <button class="menu-button" onclick="showSection('flights')">Flights</button>
+            <button class="menu-button" onclick="showSection('planes')">Planes</button>
+            <button class="menu-button" onclick="showSection('pilots')">Pilots</button>
+            <button class="menu-button" onclick="showSection('airports')">Airports</button>
+        </div>
+        
+        <div id="status-message" class="status-message hidden"></div>
+        
+        
+        <div id="flights-section" class="content-area">
+            <h2>Flight Management</h2>
+            <div class="menu">
+                <button class="menu-button" onclick="showFlightForm('add')">Add Flight</button>
+                <button class="menu-button" onclick="showFlightList()">View Flights</button>
+            </div>
+            
+            
+            <div id="flight-form" class="hidden">
+                <h3 id="flight-form-title">Add New Flight</h3>
+                <form id="flight-data-form">
+                    <input type="hidden" id="flight-id">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="departure-airport">Departure Airport</label>
+                            <select id="departure-airport" required>
+                                <option value="">Select Airport</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="arrival-airport">Arrival Airport</label>
+                            <input type="text" id="arrival-airport" required placeholder="Enter arrival airport">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="departure-date">Departure Date</label>
+                            <input type="datetime-local" id="departure-date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="arrival-date">Arrival Date</label>
+                            <input type="datetime-local" id="arrival-date" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="plane">Plane</label>
+                            <select id="plane" required>
+                                <option value="">Select Plane</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pilot">Pilot</label>
+                            <select id="pilot" required>
+                                <option value="">Select Pilot</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <h3>Pricing</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eco-price">Economy Class Price ($)</label>
+                            <input type="number" id="eco-price" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="business-price">Business Class Price ($)</label>
+                            <input type="number" id="business-price" min="0" step="0.01" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="luxury-price">Luxury Class Price ($)</label>
+                            <input type="number" id="luxury-price" min="0" step="0.01" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="flight-submit-btn">Save Flight</button>
+                    <button type="button" class="submit-btn" onclick="showFlightList()" style="background-color: #7f8c8d;">Cancel</button>
+                </form>
+            </div>
+            
+            
+            <div id="flight-list">
+                <table id="flights-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Departure</th>
+                            <th>Arrival</th>
+                            <th>Departure Time</th>
+                            <th>Arrival Time</th>
+                            <th>Plane</th>
+                            <th>Pilot</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+     
+        <div id="planes-section" class="content-area hidden">
+            <h2>Plane Management</h2>
+            <div class="menu">
+                <button class="menu-button" onclick="showPlaneForm('add')">Add Plane</button>
+                <button class="menu-button" onclick="showPlaneList()">View Planes</button>
+            </div>
+            
+            
+            <div id="plane-form" class="hidden">
+                <h3 id="plane-form-title">Add New Plane</h3>
+                <form id="plane-data-form">
+                    <input type="hidden" id="plane-id">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="plane-matricule">Matricule</label>
+                            <input type="number" id="plane-matricule" required>
+                        </div>
+                    </div>
+                    
+                    <h3>Seat Configuration</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="eco-seats">Economy Class Seats</label>
+                            <input type="number" id="eco-seats" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="business-seats">Business Class Seats</label>
+                            <input type="number" id="business-seats" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="luxury-seats">Luxury Class Seats</label>
+                            <input type="number" id="luxury-seats" min="0" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="plane-submit-btn">Save Plane</button>
+                    <button type="button" class="submit-btn" onclick="showPlaneList()" style="background-color: #7f8c8d;">Cancel</button>
+                </form>
+            </div>
+            
+           
+            <div id="plane-list">
+                <table id="planes-table">
+                    <thead>
+                        <tr>
+                            <th>Matricule</th>
+                            <th>Economy Seats</th>
+                            <th>Business Seats</th>
+                            <th>Luxury Seats</th>
+                            <th>Total Seats</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+       
+        <div id="pilots-section" class="content-area hidden">
+            <h2>Pilot Management</h2>
+            <div class="menu">
+                <button class="menu-button" onclick="showPilotForm('add')">Add Pilot</button>
+                <button class="menu-button" onclick="showPilotList()">View Pilots</button>
+            </div>
+            
+            
+            <div id="pilot-form" class="hidden">
+                <h3 id="pilot-form-title">Add New Pilot</h3>
+                <form id="pilot-data-form">
+                    <input type="hidden" id="pilot-id">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pilot-firstname">First Name</label>
+                            <input type="text" id="pilot-firstname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pilot-lastname">Last Name</label>
+                            <input type="text" id="pilot-lastname" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="pilot-submit-btn">Save Pilot</button>
+                    <button type="button" class="submit-btn" onclick="showPilotList()" style="background-color: #7f8c8d;">Cancel</button>
+                </form>
+            </div>
+            
+           
+            <div id="pilot-list">
+                <table id="pilots-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+       
+        <div id="airports-section" class="content-area hidden">
+            <h2>Airport Management</h2>
+            <div class="menu">
+                <button class="menu-button" onclick="showAirportForm()">Add Airport</button>
+                <button class="menu-button" onclick="showAirportList()">View Airports</button>
+            </div>
+            
+            
+            <div id="airport-form" class="hidden">
+                <h3>Add New Airport</h3>
+                <form id="airport-data-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="airport-name">Airport Name</label>
+                            <input type="text" id="airport-name" required>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="airport-submit-btn">Save Airport</button>
+                    <button type="button" class="submit-btn" onclick="showAirportList()" style="background-color: #7f8c8d;">Cancel</button>
+                </form>
+            </div>
+            
+           
+            <div id="airport-list">
+                <table id="airports-table">
+                    <thead>
+                        <tr>
+                            <th>Airport Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                       
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+   
+        let airports = [
+            { name: "John F. Kennedy International Airport" },
+            { name: "Heathrow Airport" },
+            { name: "Charles de Gaulle Airport" }
+        ];
+        
+        let planes = [
+            { matricule: 1001, ecoSeats: 150, businessSeats: 30, luxurySeats: 10 },
+            { matricule: 1002, ecoSeats: 200, businessSeats: 50, luxurySeats: 20 },
+            { matricule: 1003, ecoSeats: 100, businessSeats: 20, luxurySeats: 5 }
+        ];
+        
+        let pilots = [
+            { id: 1, firstName: "John", lastName: "Smith" },
+            { id: 2, firstName: "Emily", lastName: "Johnson" },
+            { id: 3, firstName: "Michael", lastName: "Williams" }
+        ];
+        
+        let flights = [
+            { 
+                id: 1, 
+                departureAirport: "John F. Kennedy International Airport", 
+                arrivalAirport: "Heathrow Airport",
+                departureTime: "2023-06-15T08:00", 
+                arrivalTime: "2023-06-15T20:00",
+                planeMatricule: 1001,
+                pilotId: 1,
+                prices: { eco: 500, business: 1200, luxury: 2500 }
+            },
+            { 
+                id: 2, 
+                departureAirport: "Heathrow Airport", 
+                arrivalAirport: "Charles de Gaulle Airport",
+                departureTime: "2023-06-16T10:00", 
+                arrivalTime: "2023-06-16T12:30",
+                planeMatricule: 1002,
+                pilotId: 2,
+                prices: { eco: 300, business: 800, luxury: 1800 }
+            }
+        ];
+        
+     
+        function showStatusMessage(message, isSuccess) {
+            const statusElement = document.getElementById('status-message');
+            statusElement.textContent = message;
+            statusElement.className = isSuccess ? 'status-message success' : 'status-message error';
+            statusElement.classList.remove('hidden');
+            
+            setTimeout(() => {
+                statusElement.classList.add('hidden');
+            }, 3000);
+        }
+        
+        function formatDateTime(datetimeStr) {
+            if (!datetimeStr) return '';
+            const date = new Date(datetimeStr);
+            return date.toLocaleString();
+        }
+        
+        function getPilotName(pilotId) {
+            const pilot = pilots.find(p => p.id === pilotId);
+            return pilot ? `${pilot.firstName} ${pilot.lastName}` : 'Unknown';
+        }
+        
+    
+        function showSection(section) {
+            document.getElementById('flights-section').classList.add('hidden');
+            document.getElementById('planes-section').classList.add('hidden');
+            document.getElementById('pilots-section').classList.add('hidden');
+            document.getElementById('airports-section').classList.add('hidden');
+            
+            document.getElementById(`${section}-section`).classList.remove('hidden');
+            
+           
+            if (section === 'flights') showFlightList();
+            if (section === 'planes') showPlaneList();
+            if (section === 'pilots') showPilotList();
+            if (section === 'airports') showAirportList();
+        }
+        
+        
+        function showFlightForm(action, flightId = null) {
+            document.getElementById('flight-list').classList.add('hidden');
+            document.getElementById('flight-form').classList.remove('hidden');
+            
+            
+            const departureAirportSelect = document.getElementById('departure-airport');
+            departureAirportSelect.innerHTML = '<option value="">Select Airport</option>';
+            airports.forEach(airport => {
+                const option = document.createElement('option');
+                option.value = airport.name;
+                option.textContent = airport.name;
+                departureAirportSelect.appendChild(option);
+            });
+            
+            const planeSelect = document.getElementById('plane');
+            planeSelect.innerHTML = '<option value="">Select Plane</option>';
+            planes.forEach(plane => {
+                const option = document.createElement('option');
+                option.value = plane.matricule;
+                option.textContent = `Plane #${plane.matricule}`;
+                planeSelect.appendChild(option);
+            });
+            
+            const pilotSelect = document.getElementById('pilot');
+            pilotSelect.innerHTML = '<option value="">Select Pilot</option>';
+            pilots.forEach(pilot => {
+                const option = document.createElement('option');
+                option.value = pilot.id;
+                option.textContent = `${pilot.firstName} ${pilot.lastName}`;
+                pilotSelect.appendChild(option);
+            });
+            
+            if (action === 'edit' && flightId) {
+                document.getElementById('flight-form-title').textContent = 'Edit Flight';
+                const flight = flights.find(f => f.id === flightId);
+                
+                document.getElementById('flight-id').value = flight.id;
+                document.getElementById('departure-airport').value = flight.departureAirport;
+                document.getElementById('arrival-airport').value = flight.arrivalAirport;
+                document.getElementById('departure-date').value = flight.departureTime;
+                document.getElementById('arrival-date').value = flight.arrivalTime;
+                document.getElementById('plane').value = flight.planeMatricule;
+                document.getElementById('pilot').value = flight.pilotId;
+                document.getElementById('eco-price').value = flight.prices.eco;
+                document.getElementById('business-price').value = flight.prices.business;
+                document.getElementById('luxury-price').value = flight.prices.luxury;
+            } else {
+                document.getElementById('flight-form-title').textContent = 'Add New Flight';
+                document.getElementById('flight-data-form').reset();
+            }
+        }
+        
+        function showFlightList() {
+            document.getElementById('flight-form').classList.add('hidden');
+            document.getElementById('flight-list').classList.remove('hidden');
+            
+            const flightsTable = document.getElementById('flights-table').querySelector('tbody');
+            flightsTable.innerHTML = '';
+            
+            flights.forEach(flight => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${flight.id}</td>
+                    <td>${flight.departureAirport}</td>
+                    <td>${flight.arrivalAirport}</td>
+                    <td>${formatDateTime(flight.departureTime)}</td>
+                    <td>${formatDateTime(flight.arrivalTime)}</td>
+                    <td>Plane #${flight.planeMatricule}</td>
+                    <td>${getPilotName(flight.pilotId)}</td>
+                    <td>
+                        <button class="edit-btn" onclick="showFlightForm('edit', ${flight.id})">Edit</button>
+                        <button class="delete-btn" onclick="deleteFlight(${flight.id})">Delete</button>
+                    </td>
+                `;
+                
+                flightsTable.appendChild(row);
+            });
+        }
+        
+        function saveFlight(event) {
+            event.preventDefault();
+            
+            const flightId = document.getElementById('flight-id').value;
+            const departureAirport = document.getElementById('departure-airport').value;
+            const arrivalAirport = document.getElementById('arrival-airport').value;
+            const departureTime = document.getElementById('departure-date').value;
+            const arrivalTime = document.getElementById('arrival-date').value;
+            const planeMatricule = parseInt(document.getElementById('plane').value);
+            const pilotId = parseInt(document.getElementById('pilot').value);
+            const ecoPrice = parseFloat(document.getElementById('eco-price').value);
+            const businessPrice = parseFloat(document.getElementById('business-price').value);
+            const luxuryPrice = parseFloat(document.getElementById('luxury-price').value);
+            
+            const flightData = {
+                departureAirport,
+                arrivalAirport,
+                departureTime,
+                arrivalTime,
+                planeMatricule,
+                pilotId,
+                prices: { eco: ecoPrice, business: businessPrice, luxury: luxuryPrice }
+            };
+            
+            if (flightId) {
+               
+                const index = flights.findIndex(f => f.id === parseInt(flightId));
+                flightData.id = parseInt(flightId);
+                flights[index] = flightData;
+                showStatusMessage('Flight updated successfully!', true);
+            } else {
+             
+                const newId = flights.length > 0 ? Math.max(...flights.map(f => f.id)) + 1 : 1;
+                flightData.id = newId;
+                flights.push(flightData);
+                showStatusMessage('Flight added successfully!', true);
+            }
+            
+            showFlightList();
+        }
+        
+        function deleteFlight(flightId) {
+            if (confirm('Are you sure you want to delete this flight?')) {
+                flights = flights.filter(f => f.id !== flightId);
+                showStatusMessage('Flight deleted successfully!', true);
+                showFlightList();
+            }
+        }
+        
+       
+        function showPlaneForm(action, matricule = null) {
+            document.getElementById('plane-list').classList.add('hidden');
+            document.getElementById('plane-form').classList.remove('hidden');
+            
+            if (action === 'edit' && matricule) {
+                document.getElementById('plane-form-title').textContent = 'Edit Plane';
+                const plane = planes.find(p => p.matricule === matricule);
+                
+                document.getElementById('plane-id').value = plane.matricule;
+                document.getElementById('plane-matricule').value = plane.matricule;
+                document.getElementById('eco-seats').value = plane.ecoSeats;
+                document.getElementById('business-seats').value = plane.businessSeats;
+                document.getElementById('luxury-seats').value = plane.luxurySeats;
+            } else {
+                document.getElementById('plane-form-title').textContent = 'Add New Plane';
+                document.getElementById('plane-data-form').reset();
+            }
+        }
+        
+        function showPlaneList() {
+            document.getElementById('plane-form').classList.add('hidden');
+            document.getElementById('plane-list').classList.remove('hidden');
+            
+            const planesTable = document.getElementById('planes-table').querySelector('tbody');
+            planesTable.innerHTML = '';
+            
+            planes.forEach(plane => {
+                const row = document.createElement('tr');
+                const totalSeats = plane.ecoSeats + plane.businessSeats + plane.luxurySeats;
+                
+                row.innerHTML = `
+                    <td>${plane.matricule}</td>
+                    <td>${plane.ecoSeats}</td>
+                    <td>${plane.businessSeats}</td>
+                    <td>${plane.luxurySeats}</td>
+                    <td>${totalSeats}</td>
+                    <td>
+                        <button class="edit-btn" onclick="showPlaneForm('edit', ${plane.matricule})">Edit</button>
+                        <button class="delete-btn" onclick="deletePlane(${plane.matricule})">Delete</button>
+                    </td>
+                `;
+                
+                planesTable.appendChild(row);
+            });
+        }
+        
+        function savePlane(event) {
+            event.preventDefault();
+            
+            const matricule = parseInt(document.getElementById('plane-matricule').value);
+            const ecoSeats = parseInt(document.getElementById('eco-seats').value);
+            const businessSeats = parseInt(document.getElementById('business-seats').value);
+            const luxurySeats = parseInt(document.getElementById('luxury-seats').value);
+            
+            const planeData = {
+                matricule,
+                ecoSeats,
+                businessSeats,
+                luxurySeats
+            };
+            
+            const existingIndex = planes.findIndex(p => p.matricule === matricule);
+            
+            if (existingIndex >= 0) {
+              
+                planes[existingIndex] = planeData;
+                showStatusMessage('Plane updated successfully!', true);
+            } else {
+                
+                planes.push(planeData);
+                showStatusMessage('Plane added successfully!', true);
+            }
+            
+            showPlaneList();
+        }
+        
+        function deletePlane(matricule) {
+            if (confirm('Are you sure you want to delete this plane?')) {
+                planes = planes.filter(p => p.matricule !== matricule);
+                showStatusMessage('Plane deleted successfully!', true);
+                showPlaneList();
+            }
+        }
+        
+        
+        function showPilotForm(action, pilotId = null) {
+            document.getElementById('pilot-list').classList.add('hidden');
+            document.getElementById('pilot-form').classList.remove('hidden');
+            
+            if (action === 'edit' && pilotId) {
+                document.getElementById('pilot-form-title').textContent = 'Edit Pilot';
+                const pilot = pilots.find(p => p.id === pilotId);
+                
+                document.getElementById('pilot-id').value = pilot.id;
+                document.getElementById('pilot-firstname').value = pilot.firstName;
+                document.getElementById('pilot-lastname').value = pilot.lastName;
+            } else {
+                document.getElementById('pilot-form-title').textContent = 'Add New Pilot';
+                document.getElementById('pilot-data-form').reset();
+            }
+        }
+        
+        function showPilotList() {
+            document.getElementById('pilot-form').classList.add('hidden');
+            document.getElementById('pilot-list').classList.remove('hidden');
+            
+            const pilotsTable = document.getElementById('pilots-table').querySelector('tbody');
+            pilotsTable.innerHTML = '';
+            
+            pilots.forEach(pilot => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${pilot.id}</td>
+                    <td>${pilot.firstName}</td>
+                    <td>${pilot.lastName}</td>
+                    <td>
+                        <button class="edit-btn" onclick="showPilotForm('edit', ${pilot.id})">Edit</button>
+                        <button class="delete-btn" onclick="deletePilot(${pilot.id})">Delete</button>
+                    </td>
+                `;
+                
+                pilotsTable.appendChild(row);
+            });
+        }
+        
+        function savePilot(event) {
+            event.preventDefault();
+            
+            const pilotId = document.getElementById('pilot-id').value;
+            const firstName = document.getElementById('pilot-firstname').value;
+            const lastName = document.getElementById('pilot-lastname').value;
+            
+            const pilotData = {
+                id: pilotId ? parseInt(pilotId) : (pilots.length > 0 ? Math.max(...pilots.map(p => p.id)) + 1 : 1),
+                firstName,
+                lastName
+            };
+            
+            if (pilotId) {
+                
+                const index = pilots.findIndex(p => p.id === parseInt(pilotId));
+                pilots[index] = pilotData;
+                showStatusMessage('Pilot updated successfully!', true);
+            } else {
+               
+                pilots.push(pilotData);
+                showStatusMessage('Pilot added successfully!', true);
+            }
+            
+            showPilotList();
+        }
+        
+        function deletePilot(pilotId) {
+            if (confirm('Are you sure you want to delete this pilot?')) {
+                pilots = pilots.filter(p => p.id !== pilotId);
+                showStatusMessage('Pilot deleted successfully!', true);
+                showPilotList();
+            }
+        }
+        
+        // Airport management
+        function showAirportForm() {
+            document.getElementById('airport-list').classList.add('hidden');
+            document.getElementById('airport-form').classList.remove('hidden');
+            document.getElementById('airport-data-form').reset();
+        }
+        
+        function showAirportList() {
+            document.getElementById('airport-form').classList.add('hidden');
+            document.getElementById('airport-list').classList.remove('hidden');
+            
+            const airportsTable = document.getElementById('airports-table').querySelector('tbody');
+            airportsTable.innerHTML = '';
+            
+            airports.forEach(airport => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${airport.name}</td>
+                    <td>
+                        <button class="delete-btn" onclick="deleteAirport('${airport.name}')">Delete</button>
+                    </td>
+                `;
+                
+                airportsTable.appendChild(row);
+            });
+        }
+        
+        function saveAirport(event) {
+            event.preventDefault();
+            
+            const airportName = document.getElementById('airport-name').value;
+            
+            if (!airports.some(a => a.name === airportName)) {
+                airports.push({ name: airportName });
+                showStatusMessage('Airport added successfully!', true);
+                showAirportList();
+            } else {
+                showStatusMessage('Airport already exists!', false);
+            }
+        }
+        
+        function deleteAirport(airportName) {
+            if (confirm('Are you sure you want to delete this airport?')) {
+            
+                const isUsed = flights.some(f => f.departureAirport === airportName || f.arrivalAirport === airportName);
+                
+                if (isUsed) {
+                    showStatusMessage('Cannot delete airport: it is used in one or more flights', false);
+                } else {
+                    airports = airports.filter(a => a.name !== airportName);
+                    showStatusMessage('Airport deleted successfully!', true);
+                    showAirportList();
+                }
+            }
+        }
+        
+        
+        document.addEventListener('DOMContentLoaded', function() {
+        
+            document.getElementById('flight-data-form').addEventListener('submit', saveFlight);
+            document.getElementById('plane-data-form').addEventListener('submit', savePlane);
+            document.getElementById('pilot-data-form').addEventListener('submit', savePilot);
+            document.getElementById('airport-data-form').addEventListener('submit', saveAirport);
+            
+           
+            showSection('flights');
+        });
+    </script>
+</body>
+</html>

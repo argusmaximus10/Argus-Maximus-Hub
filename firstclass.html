@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Passenger Registration | AeroLux Airlines</title>
+    <style>
+        :root {
+            --primary-color: #6a0dad;
+            --secondary-color: #2d0433;
+            --accent-color: #9c27b0;
+            --text-color: #e0e0e0;
+            --background-dark: #121212;
+            --background-light: #1e1e1e;
+            --gold-accent: #ffd700;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--background-dark);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+                            url('https://images.unsplash.com/photo-1556388158-158ea5ccacbd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(106, 13, 173, 0.3);
+            overflow: hidden;
+            border: 1px solid var(--primary-color);
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color), var(--gold-accent));
+        }
+
+        .header {
+            padding: 30px;
+            text-align: center;
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background-color: var(--gold-accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            color: var(--secondary-color);
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+        }
+
+        .form-container {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--background-light);
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(156, 39, 176, 0.3);
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-col {
+            flex: 1;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
+            box-shadow: 0 5px 15px rgba(156, 39, 176, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .passport-preview {
+            height: 150px;
+            background-color: var(--background-light);
+            border: 2px dashed #444;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .passport-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            display: none;
+        }
+
+        .passport-preview::before {
+            content: 'Passport Image Preview';
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .passport-preview.has-image::before {
+            display: none;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-label {
+            display: block;
+            padding: 12px;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .file-label:hover {
+            background-color: var(--primary-color);
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: '▼';
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            color: var(--text-color);
+            pointer-events: none;
+        }
+
+        select.form-control {
+            appearance: none;
+            padding-right: 30px;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.8rem;
+            color: #666;
+            border-top: 1px solid #333;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="logo">SL</div>
+        <div class="header">
+            <h1>Passenger information</h1>
+            <p>Please provide your details for a seamless travel experience</p>
+        </div>
+        
+        <div class="form-container">
+            <form id="passengerForm">
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="passportNumber">Passport Number</label>
+                    <input type="text" id="passportNumber" class="form-control" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="nationality">Nationality</label>
+                            <div class="select-wrapper">
+                                <select id="nationality" class="form-control" required>
+                                    <option value="">Select Nationality</option>
+                                    <option value="US">United States</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="FR">France</option>
+                                    <option value="JP">Japan</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-col">
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob" class="form-control" required>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="passportExpiry">Passport Expiry Date</label>
+                    <input type="date" id="passportExpiry" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Passport Image</label>
+                    <div class="passport-preview" id="passportPreview">
+                        <img id="previewImage" src="" alt="Passport Preview">
+                    </div>
+                    <input type="file" id="passportImage" class="file-input" accept="image/*">
+                    <label for="passportImage" class="file-label">Upload Passport Photo</label>
+                </div>
+                
+                <div class="form-group">
+                    <label for="specialRequests">Special Requests</label>
+                    <textarea id="specialRequests" class="form-control" rows="3" placeholder="Dietary restrictions, accessibility needs, etc."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <input type="checkbox" id="privacyPolicy" required>
+                    <label for="privacyPolicy">I agree to the <a href="#" style="color: var(--accent-color);">Privacy Policy</a> and <a href="#" style="color: var(--accent-color);">Terms of Service</a></label>
+                </div>
+                
+                <button type="submit" class="btn">Complete Registration</button>
+            </form>
+        </div>
+        
+        <div class="footer">
+            &copy; Aerolux. All rights reserved.
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            const passportImage = document.getElementById('passportImage');
+            const passportPreview = document.getElementById('passportPreview');
+            const previewImage = document.getElementById('previewImage');
+            
+            passportImage.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(event) {
+                        previewImage.src = event.target.result;
+                        previewImage.style.display = 'block';
+                        passportPreview.classList.add('has-image');
+                    }
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            
+            const form = document.getElementById('passengerForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+              
+                if (!form.checkValidity()) {
+                    alert('Please fill in all required fields correctly.');
+                    return;
+                }
+                
+               
+                const formData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    passportNumber: document.getElementById('passportNumber').value,
+                    nationality: document.getElementById('nationality').value,
+                    dob: document.getElementById('dob').value,
+                    passportExpiry: document.getElementById('passportExpiry').value,
+                    specialRequests: document.getElementById('specialRequests').value,
+                    passportImage: passportImage.files[0] ? passportImage.files[0].name : null
+                };
+                
+             
+                console.log('Form submitted:', formData);
+                
+               
+                alert('Thank you for your registration! Your information has been submitted successfully.');
+                form.reset();
+                passportPreview.classList.remove('has-image');
+                previewImage.style.display = 'none';
+                previewImage.src = '';
+            });
+            
+            
+            const inputs = document.querySelectorAll('.form-control');
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentNode.style.transform = 'translateY(-3px)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentNode.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
